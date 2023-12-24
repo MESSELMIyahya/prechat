@@ -14,7 +14,6 @@ type FnTyp = (req:ReqTyp,res:Response,next:NextFunction) => Promise<any>;
 
 const OAuthGoogleLoginController : FnTyp  =  async(req,res,next) => {
     const userData = req.user ;
-    console.log(req.user);
     if(!userData) return next(createErr[401]('Unauthenticated here :)'));
     try{
         // get user 
@@ -22,8 +21,8 @@ const OAuthGoogleLoginController : FnTyp  =  async(req,res,next) => {
         if(!user) return next(createErr[401]('Unauthenticated'));
 
         // jwt auth 
-        const accessToken  = generateAccessToken({email:user.email,id:user._id,username:user.username});
-        const refreshToken = generateRefreshToken({email:user.email,id:user._id,username:user.username});
+        const accessToken  = generateAccessToken({email:user.email,id:user._id,username:user.userName});
+        const refreshToken = generateRefreshToken({email:user.email,id:user._id,username:user.userName});
 
         // saving Access Token and Refresh Token as HTTPOnly cookie
         res.cookie('ac_to',accessToken,{httpOnly:true});

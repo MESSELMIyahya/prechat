@@ -7,17 +7,17 @@ type FnTyp = (req:Request,res:Response,next:NextFunction) => Promise<any>;
 // register new user 
 
 const AuthRegisterController : FnTyp  =  async(req,res,next) => {
-    const {name,userName,password,email} = req.body ;
-    if(!name||!userName||!password||!email) return next(createErr.BadRequest('body data not provided'));
+    const {name,username,password,email} = req.body ;
+    if(!name||!username||!password||!email) return next(createErr.BadRequest('body data not provided'));
     try{
         // see if this email is existed
         // @ts-ignore
         const existedEmail = await UserModel.doesEmailExists(email);
         
-        if(existedEmail) return next(createErr.Conflict(`user with email:${email} already exists`));
+        if(existedEmail) return next(createErr.Conflict(`email is already token`));
 
         // create user 
-        const User = new UserModel({ email,name,userName,password });
+        const User = new UserModel({ email,name,userName:username,password });
         // saving the user 
         const saved = await User.save();
 

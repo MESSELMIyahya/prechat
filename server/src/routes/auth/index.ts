@@ -10,7 +10,7 @@ import AuthIsAuthenticatedController from '../../controllers/auth/IsAuthenticate
 const app = Router();
 
 // is authenticated route
-app.get('/is-authenticated',AuthIsAuthenticatedController)
+app.get('/is-authenticated',AuthIsAuthenticatedController);
 
 // register route 
 app.post('/register',AuthRegisterController);

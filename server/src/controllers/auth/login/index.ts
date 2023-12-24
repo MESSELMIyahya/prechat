@@ -14,7 +14,7 @@ const AuthLoginController : FnTyp  =  async(req,res,next) => {
     try{
         // get user 
         const user = await UserModel.findOne({email});
-        if(!user) return next(createErr[401]('Unauthenticated'));
+        if(!user) return next(createErr[400]('Unauthenticated'));
 
         // verify password 
         // @ts-ignore
@@ -22,8 +22,8 @@ const AuthLoginController : FnTyp  =  async(req,res,next) => {
         if(!isValidPass) return next(createErr[401]('password is not valid'));
 
         // jwt auth 
-        const accessToken  = generateAccessToken({email:user.email,id:user._id,username:user.username});
-        const refreshToken = generateRefreshToken({email:user.email,id:user._id,username:user.username});
+        const accessToken  = generateAccessToken({email:user.email,id:user._id,username:user.userName});
+        const refreshToken = generateRefreshToken({email:user.email,id:user._id,username:user.userName});
 
         // saving Access Token and Refresh Token as HTTPOnly cookie
         res.cookie('ac_to',accessToken,{httpOnly:true});
